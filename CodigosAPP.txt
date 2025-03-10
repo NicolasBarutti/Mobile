@@ -1,0 +1,13 @@
+// Seguraça
+
+Set-ExecutionPolicy Bypass -Scope Process
+ 
+
+// Criar projeto
+
+npx create-expo-app aula --template blank
+
+
+// iniciar projeto
+
+npm start
