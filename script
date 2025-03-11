@@ -2,53 +2,44 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Button } from 'react-native';
 
 const App = () => {
-  const [valorOriginal, setValorOriginal] = useState('');
-  const [percentualAumento, setPercentualAumento] = useState('');
-  const [novoValor, setNovoValor] = useState(null);
-  const [valorAumento, setValorAumento] = useState(null);
+  const [valor, setValor] = useState('');
+  const [percentual, setPercentual] = useState('');
+  const [resultado, setResultado] = useState(null);
 
-  const calcularNovoValor = () => {
-    const valor = parseFloat(valorOriginal);
-    const percentual = parseFloat(percentualAumento);
+  const calcular = () => {
+    const v = parseFloat(valor);
+    const p = parseFloat(percentual);
 
-    if (isNaN(valor) || isNaN(percentual)) {
-      alert('Por favor, insira valores numéricos válidos.');
+    if (!v || !p) {
+      alert('Preencha os campos corretamente!');
       return;
     }
 
-    const aumento = valor * (percentual / 100);
-    const resultado = valor + aumento;
-
-    setValorAumento(aumento.toFixed(2));
-    setNovoValor(resultado.toFixed(2));
+    const aumento = v * (p / 100);
+    setResultado(v + aumento);
   };
 
   return (
     <View style={{ padding: 20 }}>
-      <Text>Valor Original do Produto:</Text>
-      <TextInput
-        keyboardType="numeric"
-        value={valorOriginal}
-        onChangeText={setValorOriginal}
-        style={{ borderWidth: 1, marginBottom: 10, padding: 5 }}
+      <Text>Valor do Produto:</Text>
+      <TextInput 
+        keyboardType="numeric" 
+        value={valor} 
+        onChangeText={setValor} 
+        style={{ borderWidth: 1, marginBottom: 10 }} 
       />
 
-      <Text>Percentual de Aumento (%):</Text>
-      <TextInput
-        keyboardType="numeric"
-        value={percentualAumento}
-        onChangeText={setPercentualAumento}
-        style={{ borderWidth: 1, marginBottom: 10, padding: 5 }}
+      <Text>Percentual de Aumento:</Text>
+      <TextInput 
+        keyboardType="numeric" 
+        value={percentual} 
+        onChangeText={setPercentual} 
+        style={{ borderWidth: 1, marginBottom: 10 }} 
       />
 
-      <Button title="Calcular" onPress={calcularNovoValor} />
+      <Button title="Calcular" onPress={calcular} />
 
-      {novoValor && (
-        <View style={{ marginTop: 20 }}>
-          <Text>Valor do Aumento: R$ {valorAumento}</Text>
-          <Text>Novo Valor do Produto: R$ {novoValor}</Text>
-        </View>
-      )}
+      {resultado && <Text style={{ marginTop: 20 }}>Novo Valor: R$ {resultado.toFixed(2)}</Text>}
     </View>
   );
 };
